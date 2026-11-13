@@ -62,7 +62,28 @@ let best=ST.get('cc_best',0),bank=ST.get('cc_bank',0),owned=ST.get('cc_own',[0])
    // PLAYER LEVEL PROGRESSION
 let playerLevel = ST.get('ncc_player_level', 1);
 let levelPoints = ST.get('ncc_level_points', 0);
-let matchRewarded = false;  
+let matchRewarded = false; 
+  function pointsNeeded(level){
+  return 100 + (level - 1) * 25;
+}
+
+function savePlayerLevel(){
+  ST.set('ncc_player_level', playerLevel);
+  ST.set('ncc_level_points', levelPoints);
+}
+
+function awardLevelPoints(points){
+  if(matchRewarded) return;
+  matchRewarded = true;
+  levelPoints += points;
+
+  while(levelPoints >= pointsNeeded(playerLevel)){
+    levelPoints -= pointsNeeded(playerLevel);
+    playerLevel++;
+  }
+
+  savePlayerLevel();
+}   
 const SK=[{n:'Classic',b:'#ffffff',c:'#e63946',cost:0},{n:'Golden',b:'#ffd23f',c:'#ff7b00',cost:25,crown:1},{n:'Ninja',b:'#3a3d5c',c:'#8d99ae',cost:60,band:1},{n:'Pinky',b:'#ff8fc7',c:'#c9184a',cost:120},{n:'Rainbow',b:'rb',c:'#e63946',cost:250}];
 const CARS=['#e63946','#2a9df4','#ffb703','#8338ec','#06d6a0','#fb5607'];
 function resize(){DPR=Math.min(devicePixelRatio||1,2);H=innerHeight;W=Math.min(innerWidth,H*.62);S=W/COLS;$('app').style.width=W+'px';C.width=W*DPR;C.height=H*DPR;C.style.width=W+'px';C.style.height=H+'px';X.setTransform(DPR,0,0,DPR,0,0)}
