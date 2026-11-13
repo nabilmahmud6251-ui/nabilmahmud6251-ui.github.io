@@ -145,7 +145,10 @@ function gen(l){
   if(o.t!=='river'&&r>0&&r<LEN&&Math.random()<.38){const c=Math.random()*COLS|0;if(!o.trees.includes(c))o.coin=c}
   rows.push(o)}
 }
-function start(l){L=l;gen(l);lsScore=score;ck={r:0,x:3,hop:null};cam=0;maxR=0;idle=0;parts=[];state='play';banner=1.8;ov(null);hud();sfx.cluck()}
+function start(l){
+ matchRewarded=false;
+ L=l;gen(l);lsScore=score;ck={r:0,x:3,hop:null};cam=0;maxR=0;idle=0;parts=[];state='play';banner=1.8;ov(null);hud();sfx.cluck()
+}
 function hud(){$('lv').textContent='Lv '+L+'/10';$('sc').textContent=score;$('co').textContent='🪙 '+bank;$('fill').style.width=(maxR/LEN*100)+'%'}
 function spark(x,y,col,n){for(let i=0;i<n;i++)parts.push({x,y,vx:rnd(-120,120),vy:rnd(-200,-20),l:.8,c:col,s:rnd(3,7)})}
 function cpos(){const h=ck.hop;let x=ck.x,r=ck.r,j=0;if(h){x=h.fx+(h.tx-h.fx)*h.t;r=h.fr+(h.tr-h.fr)*h.t;j=Math.sin(Math.PI*h.t)*S*.4}return{x,r,j,sx:(x+.5)*S,sy:ty_(r)+S*.92-j}}
