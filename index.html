@@ -168,7 +168,11 @@ function land(){
  hud();
  if(ck.r===LEN){state='win';score+=100*L;sfx.win();hud();setTimeout(showWin,700)}}
 function die(k){
- if(state!=='play')return;state='dead';dk=k;deadT=0;const p=cpos();
+ state='dead';dk=k;deadT=0;
+awardLevelPoints(10 + maxR * 2);
+const p=cpos();
+awardLevelPoints(10 + maxR * 2);
+const p=cpos();
  if(k==='water'||k==='off')sfx.splash();else sfx.die();
  spark(p.sx,p.sy-S*.4,k==='water'?'#9be7ff':'#fff',22);shake=.3;
  if(score>best){best=score;ST.set('cc_best',best)}
