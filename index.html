@@ -254,7 +254,8 @@ function showOver(){
  ov(`<h1>GAME OVER</h1><h2>${why}</h2><div style="font-size:24px;font-weight:800">Score ${score}</div><div>🏆 Best ${best} · Level ${L}/10 · 🪙 ${bank}</div>
  <button class="btn" data-a="retry">↻ RESTART</button><button class="btn alt" data-a="menu">Skins / Menu</button>${CR}`)}
 function showWin(){
- if(score>best){best=score;ST.set('cc_best',best)}
+ awardLevelPoints(40);
+ eif(score>best){best=score;ST.set('cc_best',best)}
  if(L>=10)ov(`<div style="font-size:60px">🏆</div><h1>YOU WIN!</h1><h2>You are the Crazy Chicken champion!</h2><div style="font-size:24px;font-weight:800">Score ${score}</div><div>🏆 Best ${best}</div><button class="btn" data-a="new">PLAY AGAIN</button><button class="btn alt" data-a="menu">Menu</button>${CR}`);
  else ov(`<div style="font-size:52px">🎉</div><h1>LEVEL ${L} CLEAR!</h1><div style="font-size:24px;font-weight:800">Score ${score}</div><div>Bonus +${100*L} · 🪙 ${bank}</div><button class="btn" data-a="next">NEXT LEVEL ▶</button>${CR}`)}
 ovEl.addEventListener('click',e=>{
