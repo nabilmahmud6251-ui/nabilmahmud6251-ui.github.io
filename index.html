@@ -59,35 +59,6 @@ const C=document.getElementById('c'),X=C.getContext('2d'),$=id=>document.getElem
 const COLS=7;let W,H,S,DPR;
 const ST={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 let best=ST.get('cc_best',0),bank=ST.get('cc_bank',0),owned=ST.get('cc_own',[0]),skin=ST.get('cc_skin',0),mute=ST.get('cc_mute',false);
-   // PLAYER LEVEL PROGRESSION
-let playerLevel = ST.get('ncc_player_level', 1);
-let levelPoints = ST.get('ncc_level_points', 0);
-let matchRewarded = false; 
-  function pointsNeeded(level){
-  return 100 + (level - 1) * 25;
-}
-
-function savePlayerLevel(){
-  ST.set('ncc_player_level', playerLevel);
-  ST.set('ncc_level_points', levelPoints);
-}
-
-function awardLevelPoints(points){
-  if(matchRewarded) return;
-  matchRewarded = true;
-  levelPoints += points;
-
-  while(levelPoints >= pointsNeeded(playerLevel)){
-    levelPoints -= pointsNeeded(playerLevel);
-    playerLevel++;
-  }
-
-  savePlayerLevel();
-  const levelDisplay = document.getElementById('nccPlayerLevel');
-if(levelDisplay) levelDisplay.textContent = playerLevel;
-     const pointsDisplay = document.getElementById('nccLevelPoints');
-if(pointsDisplay) pointsDisplay.textContent = levelPoints;
-}   
 const SK=[{n:'Classic',b:'#ffffff',c:'#e63946',cost:0},{n:'Golden',b:'#ffd23f',c:'#ff7b00',cost:25,crown:1},{n:'Ninja',b:'#3a3d5c',c:'#8d99ae',cost:60,band:1},{n:'Pinky',b:'#ff8fc7',c:'#c9184a',cost:120},{n:'Rainbow',b:'rb',c:'#e63946',cost:250}];
 const CARS=['#e63946','#2a9df4','#ffb703','#8338ec','#06d6a0','#fb5607'];
 function resize(){DPR=Math.min(devicePixelRatio||1,2);H=innerHeight;W=Math.min(innerWidth,H*.62);S=W/COLS;$('app').style.width=W+'px';C.width=W*DPR;C.height=H*DPR;C.style.width=W+'px';C.style.height=H+'px';X.setTransform(DPR,0,0,DPR,0,0)}
@@ -149,10 +120,7 @@ function gen(l){
   if(o.t!=='river'&&r>0&&r<LEN&&Math.random()<.38){const c=Math.random()*COLS|0;if(!o.trees.includes(c))o.coin=c}
   rows.push(o)}
 }
-function start(l){
- matchRewarded=false;
- L=l;gen(l);lsScore=score;ck={r:0,x:3,hop:null};cam=0;maxR=0;idle=0;parts=[];state='play';banner=1.8;ov(null);hud();sfx.cluck()
-}
+function start(l){L=l;gen(l);lsScore=score;ck={r:0,x:3,hop:null};cam=0;maxR=0;idle=0;parts=[];state='play';banner=1.8;ov(null);hud();sfx.cluck()}
 function hud(){$('lv').textContent='Lv '+L+'/10';$('sc').textContent=score;$('co').textContent='🪙 '+bank;$('fill').style.width=(maxR/LEN*100)+'%'}
 function spark(x,y,col,n){for(let i=0;i<n;i++)parts.push({x,y,vx:rnd(-120,120),vy:rnd(-200,-20),l:.8,c:col,s:rnd(3,7)})}
 function cpos(){const h=ck.hop;let x=ck.x,r=ck.r,j=0;if(h){x=h.fx+(h.tx-h.fx)*h.t;r=h.fr+(h.tr-h.fr)*h.t;j=Math.sin(Math.PI*h.t)*S*.4}return{x,r,j,sx:(x+.5)*S,sy:ty_(r)+S*.92-j}}
@@ -172,11 +140,7 @@ function land(){
  hud();
  if(ck.r===LEN){state='win';score+=100*L;sfx.win();hud();setTimeout(showWin,700)}}
 function die(k){
- state='dead';dk=k;deadT=0;
-awardLevelPoints(10 + maxR * 2);
-const p=cpos();
-awardLevelPoints(10 + maxR * 2);
-const p=cpos();
+ if(state!=='play')return;state='dead';dk=k;deadT=0;const p=cpos();
  if(k==='water'||k==='off')sfx.splash();else sfx.die();
  spark(p.sx,p.sy-S*.4,k==='water'?'#9be7ff':'#fff',22);shake=.3;
  if(score>best){best=score;ST.set('cc_best',best)}
@@ -258,8 +222,7 @@ function showOver(){
  ov(`<h1>GAME OVER</h1><h2>${why}</h2><div style="font-size:24px;font-weight:800">Score ${score}</div><div>🏆 Best ${best} · Level ${L}/10 · 🪙 ${bank}</div>
  <button class="btn" data-a="retry">↻ RESTART</button><button class="btn alt" data-a="menu">Skins / Menu</button>${CR}`)}
 function showWin(){
- awardLevelPoints(40);
- eif(score>best){best=score;ST.set('cc_best',best)}
+ if(score>best){best=score;ST.set('cc_best',best)}
  if(L>=10)ov(`<div style="font-size:60px">🏆</div><h1>YOU WIN!</h1><h2>You are the Crazy Chicken champion!</h2><div style="font-size:24px;font-weight:800">Score ${score}</div><div>🏆 Best ${best}</div><button class="btn" data-a="new">PLAY AGAIN</button><button class="btn alt" data-a="menu">Menu</button>${CR}`);
  else ov(`<div style="font-size:52px">🎉</div><h1>LEVEL ${L} CLEAR!</h1><div style="font-size:24px;font-weight:800">Score ${score}</div><div>Bonus +${100*L} · 🪙 ${bank}</div><button class="btn" data-a="next">NEXT LEVEL ▶</button>${CR}`)}
 ovEl.addEventListener('click',e=>{
@@ -295,135 +258,5 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
-<!-- PLAYER LOBBY -->
 
-
- <style>
-#chickenLobby{position:fixed;inset:0;z-index:99999;overflow:hidden;font-family:Arial,sans-serif;color:white;background:linear-gradient(#28a9f5 0%,#83d9ff 53%,#8be64b 54%,#39a82e 100%);text-shadow:0 2px 2px #17243a}
-#chickenLobby *{box-sizing:border-box}
-#chickenLobby button{color:white;font-weight:900;border:2px solid #17243c;border-radius:12px;background:linear-gradient(145deg,#465779,#18243e);box-shadow:0 5px 0 #111b30;padding:10px 12px;cursor:pointer}
-#chickenLobby button:active{transform:scale(.95)}
-#chickenLobby .cloud{position:absolute;width:150px;height:35px;background:#dff7ff;border-radius:50%;filter:drop-shadow(0 5px 0 #7bc8ee)}
-#chickenLobby .c1{top:17%;left:4%}#chickenLobby .c2{top:13%;right:8%}
-#chickenLobby .mountains{position:absolute;top:15%;left:0;width:100%;height:48%;background:#719be0;clip-path:polygon(0 85%,12% 48%,22% 75%,42% 5%,60% 72%,77% 30%,100% 78%,100% 100%,0 100%)}
-#chickenLobby .snow{position:absolute;top:15%;left:0;width:100%;height:35%;background:#e5f6ff;clip-path:polygon(42% 0,35% 31%,42% 22%,48% 40%,44% 27%,50% 32%,46% 12%)}
-#chickenLobby .forest{position:absolute;bottom:27%;left:0;width:100%;height:28%;background:#238c49;clip-path:polygon(0 70%,8% 10%,15% 72%,24% 25%,34% 78%,45% 12%,57% 75%,70% 10%,82% 75%,92% 18%,100% 70%,100% 100%,0 100%)}
-#chickenLobby .field{position:absolute;bottom:-10%;left:-10%;width:120%;height:54%;border-radius:50% 50% 0 0;background:linear-gradient(#a2ef50,#55c92f 65%,#249b35)}
-#chickenLobby .top{position:absolute;z-index:8;top:10px;left:12px;right:12px;display:flex;align-items:flex-start;justify-content:space-between;gap:7px}
-#chickenLobby .profile{display:flex;align-items:center;gap:8px;background:#263957;border:3px solid #111d35;border-radius:14px;padding:6px;min-width:175px}
-#chickenLobby .avatar{font-size:32px;background:#b9eaff;border:3px solid white;border-radius:12px;padding:3px}
-#chickenLobby .pname{font-size:17px;font-weight:1000}
-#chickenLobby .small{font-size:11px;color:#ffdc51}
-#chickenLobby .xp{height:9px;background:#101c32;border-radius:8px;margin-top:5px;overflow:hidden}
-#chickenLobby .xp span{display:block;width:35%;height:100%;background:#ffc72f}
-#chickenLobby .wallet{display:flex;gap:8px}
-#chickenLobby .money{background:#263957;border:2px solid #111d35;border-radius:12px;padding:8px 10px;font-weight:1000;font-size:16px;white-space:nowrap}
-#chickenLobby .money button{padding:2px 7px;margin-left:4px;background:#2679b6}
-#chickenLobby .topright{display:flex;gap:8px}
-#chickenLobby .topright button{font-size:22px;padding:9px 15px}
-#chickenLobby .rank{position:absolute;z-index:5;top:14%;left:50%;transform:translateX(-50%);background:#263957;border:2px solid #15223b;border-radius:10px;padding:8px 20px;font-weight:bold;white-space:nowrap}
-#chickenLobby .trees{position:absolute;z-index:2;bottom:25%;font-size:clamp(40px,7vw,85px);filter:drop-shadow(0 5px 2px #28522b)}
-#chickenLobby .tl{left:12%}#chickenLobby .tr{right:12%}
-#chickenLobby .hero{position:absolute;z-index:4;left:50%;bottom:17%;transform:translateX(-50%);animation:catmove 2s ease-in-out infinite}
-#chickenLobby .cat{width:clamp(190px,27vw,310px);height:auto;filter:drop-shadow(0 12px 5px #24552c88)}
-@keyframes catmove{50%{margin-bottom:9px}}
-#chickenLobby .heroName{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);background:#263957;border:2px solid white;border-radius:15px;padding:5px 15px;font-weight:bold;white-space:nowrap}
-#chickenLobby .side{position:absolute;z-index:7;top:34%;display:grid;gap:14px}
-#chickenLobby .left{left:12px}#chickenLobby .right{right:12px}
-#chickenLobby .side button{min-width:100px;font-size:14px;padding:10px 8px}
-#chickenLobby .side span{display:block;font-size:24px}
-#chickenLobby .bottom{position:absolute;z-index:8;bottom:12px;left:12px;right:12px;display:flex;align-items:end;justify-content:space-between;gap:10px}
-#chickenLobby .pass{background:#34405b;border:3px solid #17233d;border-radius:14px;padding:16px;font-weight:1000}
-#chickenLobby .mode{background:#303c5b;border:3px solid #17233d;border-radius:14px;padding:14px;text-align:center;font-weight:1000;min-width:220px}
-#chickenLobby .mode small{display:block;color:#9cff5a;margin-top:5px}
-#chickenLobby .startbox{width:25%;min-width:150px}
-#chickenLobby .energy{background:#263957;border:2px solid #111d35;border-radius:10px;padding:6px;margin-bottom:7px;text-align:center;font-weight:bold}
-#chickenLobby .start{width:100%;font-size:clamp(22px,3vw,38px);padding:25px 8px;background:linear-gradient(#ffe85c,#ffb51b);color:#392400;border:3px solid white;box-shadow:0 6px #a7650b}
-@media(max-width:600px){
- #chickenLobby .profile{min-width:0}.pname{font-size:13px!important}
- #chickenLobby .avatar{font-size:25px}
- #chickenLobby .money{font-size:11px;padding:6px}
- #chickenLobby .topright button{font-size:16px;padding:7px}
- #chickenLobby .side button{min-width:70px;font-size:10px;padding:8px 5px}
- #chickenLobby .side span{font-size:20px}
- #chickenLobby .side{gap:9px}
- #chickenLobby .hero{bottom:19%}
- #chickenLobby .cat{width:190px}
- #chickenLobby .bottom{gap:5px}
- #chickenLobby .pass{font-size:10px;padding:9px}
- #chickenLobby .mode{min-width:0;padding:8px;font-size:10px}
- #chickenLobby .startbox{min-width:105px;width:30%}
- #chickenLobby .start{font-size:21px;padding:19px 3px}
- #chickenLobby .energy{font-size:10px}
- #chickenLobby .rank{top:18%;font-size:11px}
-}
-</style>
-<div id="chickenLobby">
- <div class="cloud c1"></div><div class="cloud c2"></div>
- <div class="mountains"></div><div class="snow"></div><div class="forest"></div><div class="field"></div>
- <div class="trees tl">ð²ð³</div><div class="trees tr">ð³ð²</div>
- <div class="top">
-  <div class="profile"><div class="avatar">ð±</div><div><div class="pname" id="nccName">Player</div><div class="small">ð 0 Trophies Â· LVL <span id="nccLevel">1</span></div><div class="xp"><span></span></div></div></div>
-  <div class="wallet">
-   <div class="money">ðª <b id="nccCoins">0</b> <button onclick="nccInfo('Coin shop')">+</button></div>
-   <div class="money">ð <b id="nccDiamonds">0</b> <button onclick="nccInfo('Diamond shop')">+</button></div>
-  </div>
-  <div class="topright"><button onclick="nccInfo('Chat')">ð¬</button><button onclick="nccInfo('Menu')">â°</button></div>
- </div>
- <div class="rank">ð RANK 1ã ð 0ã LVL 1</div>
- <div class="side left">
-  <button onclick="nccInfo('Shop')"><span>ðï¸</span>SHOP</button>
-  <button onclick="nccInfo('Animals')"><span>ð¾</span>ANIMALS</button>
-  <button onclick="nccInfo('Skins')"><span>ð</span>SKINS</button>
- </div>
- <div class="side right">
-  <button onclick="nccInfo('Friends')"><span>ð¥</span>FRIENDS</button>
-  <button onclick="nccInfo('Daily')"><span>â­</span>DAILY</button>
-  <button onclick="nccInfo('News')"><span>ð£</span>NEWS</button>
- </div>
- <div class="hero">
-  <svg class="cat" viewBox="0 0 260 390" xmlns="http://www.w3.org/2000/svg">
-   <ellipse cx="130" cy="375" rx="72" ry="12" fill="#28602c"/>
-   <path d="M75 100L52 10 112 65Q130 55 148 65L208 10 185 105Q220 145 205 260L184 350Q164 375 130 365Q96 375 76 350L55 260Q40 145 75 100Z" fill="#77717e" stroke="#282431" stroke-width="8"/>
-   <path d="M67 75L59 27 99 69M193 75L201 27 161 69" fill="#ef9cbd" stroke="#282431" stroke-width="6"/>
-   <path d="M67 225Q80 180 130 188Q180 180 193 225L181 320Q165 360 130 360Q95 360 79 320Z" fill="#fff"/>
-   <path d="M85 140Q105 115 120 145M140 145Q155 115 175 140" fill="none" stroke="#282431" stroke-width="9" stroke-linecap="round"/>
-   <ellipse cx="99" cy="173" rx="22" ry="29" fill="#fff"/><ellipse cx="161" cy="173" rx="22" ry="29" fill="#fff"/>
-   <ellipse cx="101" cy="177" rx="14" ry="21" fill="#142b39"/><ellipse cx="159" cy="177" rx="14" ry="21" fill="#142b39"/>
-   <circle cx="106" cy="168" r="6" fill="white"/><circle cx="164" cy="168" r="6" fill="white"/>
-   <path d="M120 214Q130 205 140 214L130 225Z" fill="#e77b9f"/>
-   <path d="M130 225Q116 244 103 228M130 225Q144 244 157 228" fill="none" stroke="#342a34" stroke-width="4"/>
-   <path d="M77 217L30 205M77 235L28 239M183 217L230 205M183 235L232 239" stroke="#4c4650" stroke-width="4"/>
-   <path d="M87 65Q130 40 173 65" fill="none" stroke="#393440" stroke-width="9"/>
-   <path d="M83 85Q130 58 177 85" fill="none" stroke="#393440" stroke-width="7"/>
-   <path d="M83 290Q130 270 177 290" fill="none" stroke="#ddd" stroke-width="4"/>
-  </svg>
-  <div class="heroName" id="nccHeroName">PLAYER</div>
- </div>
- <div class="bottom">
-  <div class="pass">ðï¸ CAT PASS<br><small>44 / 170ã â­ 31</small></div>
-  <div class="mode">ð BATTLE ROYALE<small>Grassy Field</small></div>
-  <div class="startbox"><div class="energy">ð 200 / 200</div><button class="start" onclick="nccStart()">START</button></div>
- </div>
-</div>
-<script>
-(function(){
- const el=id=>document.getElementById(id);
- let name=localStorage.getItem('ncc_player_name')||'Player';
- el('nccName').textContent=name;
- el('nccHeroName').textContent=name.toUpperCase();
- el('nccDiamonds').textContent=localStorage.getItem('ncc_diamonds')||'0';
- el('nccCoins').textContent=typeof bank!=='undefined'?bank:(localStorage.getItem('ncc_coins')||'0');
- el('nccLevel').textContent=typeof playerLevel!=='undefined'?playerLevel:(localStorage.getItem('ncc_player_level')||'1');
- window.nccInfo=function(s){alert(s+' is coming soon!');};
- window.nccStart=function(){
-  if(typeof start==='function'){el('chickenLobby').style.display='none';start(1);}
-  else alert('Game start function was not found. Please check your original game code.');
- };
-})();
-</script>
-
-
-<!-- END PLAYER LOBBY -->
-</body>
-</html>
+</body></html>
