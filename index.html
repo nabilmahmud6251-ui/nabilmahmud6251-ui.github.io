@@ -259,89 +259,399 @@ if ("serviceWorker" in navigator) {
 }
 </script>
 <!-- PLAYER LOBBY -->
+
+<div id="chickenLobbyMount" class="land"></div>
+<div class="mountains">🏔️</div>
+<div class="trees">🌲 🌳 🌲 🌳 🌲</div>
+
+<div class="logo">🐔 NAB​IL'S CRAZY CHICKEN</div>
+
+<div class="top">
+  <div class="profile">
+    🐔 <span id="lobbyName">Player</span>
+    <div>LEVEL <span id="lobbyLevel">1</span></div>
+    <div style="background:#333;height:7px;border-radius:8px;margin-top:5px">
+      <div style="background:#ffdc30;width:35%;height:7px;border-radius:8px"></div>
+    </div>
+  </div>
+
+  <div class="wallet">
+    🪙 <span id="lobbyCoins">0</span>
+    <button class="plus" onclick="alert('Coin shop coming soon!')">+</button>
+  </div>
+
+  <div class="wallet">
+    💎 <span id="lobbyDiamonds">0</span>
+    <button class="plus" onclick="alert('Diamond shop coming soon!')">+</button>
+  </div>
+</div>
+
+<div class="hero">
+  <div id="lobbyChicken" style="font-size:125px;animation:chickenLobbyMove 1.5s infinite ease-in-out">
+    🐔
+  </div>
+  <div style="font-weight:bold;text-shadow:2px 2px #333">
+    YOUR CHICKEN
+  </div>
+  <div class="platform"></div>
+</div>
+
+<style>
+@keyframes chickenLobbyMove {
+  0%,100% {transform:translateY(0) rotate(-4deg)}
+  50% {transform:translateY(-14px) rotate(4deg)}
+}
+#chickenLobby .hero {
+  position:absolute;
+  top:29%;
+  left:50%;
+  transform:translateX(-50%);
+  width:180px;
+  text-align:center;
+  z-index:2;
+}
+#chickenLobby .platform {
+  width:145px;
+  height:17px;
+  margin:8px auto;
+  border-radius:50%;
+  background:#b9faff;
+  border:3px solid #39caff;
+  box-shadow:0 0 18px white;
+}
+#chickenLobby .sideMenu {
+  position:absolute;
+  top:34%;
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+  width:82px;
+  z-index:3;
+}
+#chickenLobby .sideMenu.left {left:7px}
+#chickenLobby .sideMenu.right {right:7px}
+#chickenLobby .sideMenu button {
+  min-height:55px;
+  border:2px solid #9cddff;
+  border-radius:12px;
+  background:linear-gradient(#287bdc,#123c83);
+  color:white;
+  font-size:11px;
+  font-weight:bold;
+}
+#chickenLobby .sideMenu span {
+  display:block;
+  font-size:22px;
+}
+</style>
+
+<div class="sideMenu left">
+  <button onclick="chickenLobbyMessage('Shop coming soon!')"><span>🛒</span>SHOP</button>
+  <button onclick="chickenLobbyMessage('Chicken collection coming soon!')"><span>🐣</span>ANIMALS</button>
+  <button onclick="chickenLobbyMessage('Chicken skins coming soon!')"><span>🎨</span>SKINS</button>
+  <button onclick="chickenLobbyMessage('Outfit collection coming soon!')"><span>👕</span>OUTFITS</button>
+</div>
+
+<div class="sideMenu right">
+  <button onclick="chickenLobbyMessage('Friends coming soon!')"><span>👥</span>FRIENDS</button>
+  <button onclick="chickenLobbyMessage('Daily rewards coming soon!')"><span>🎁</span>REWARDS</button>
+  <button onclick="chickenLobbyMessage('Missions coming soon!')"><span>🏆</span>MISSIONS</button>
+  <button onclick="chickenLobbyMessage('News coming soon!')"><span>📰</span>NEWS</button>
+</div>
+
+<div id="lobbyNotice" style="position:absolute;top:23%;left:50%;transform:translateX(-50%);z-index:4;background:#142b50;padding:9px;border-radius:10px;display:none;text-align:center"></div>
+
 <style>
 #chickenLobby {
   position:fixed;
   inset:0;
   z-index:99999;
-  background:linear-gradient(145deg,#14213d,#0077b6);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-family:Arial,sans-serif;
+  overflow:hidden;
   color:white;
-  text-align:center;
-  padding:20px;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(#168bea,#9beaff 48%,#75d82c 49%,#168b27);
 }
-#chickenLobby .lobby-box {
-  width:100%;
-  max-width:350px;
-  background:#ffffff18;
-  padding:28px 20px;
-  border-radius:22px;
-}
-#chickenLobby input,#chickenLobby button {
-  width:100%;
+#chickenLobby * {
   box-sizing:border-box;
-  padding:14px;
-  margin-top:12px;
-  border:0;
-  border-radius:12px;
-  font-size:16px;
 }
-#chickenLobby button {
-  background:#ffd60a;
-  color:#14213d;
+#chickenLobby .land {
+  position:absolute;
+  bottom:0;
+  height:48%;
+  width:100%;
+  background:linear-gradient(#a1ee42,#3cba25 65%,#137d25);
+  border-radius:50% 50% 0 0/12% 12% 0 0;
+}
+#chickenLobby .mountains {
+  position:absolute;
+  top:19%;
+  left:0;
+  width:100%;
+  text-align:center;
+  font-size:100px;
+}
+#chickenLobby .trees {
+  position:absolute;
+  top:38%;
+  width:100%;
+  text-align:center;
+  font-size:35px;
+  white-space:nowrap;
+}
+#chickenLobby .top {
+  position:absolute;
+  top:9px;
+  left:8px;
+  right:8px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:4px;
+  z-index:3;
+}
+#chickenLobby .profile {
+  background:#172b50;
+  border:2px solid #80cfff;
+  border-radius:13px;
+  padding:7px;
+  min-width:105px;
+  font-size:13px;
   font-weight:bold;
 }
-#chickenLobby .online {
-  background:#caf0f8;
+#chickenLobby .wallet {
+  background:#172b50;
+  border:2px solid #80cfff;
+  border-radius:10px;
+  padding:7px 5px;
+  font-size:12px;
+  font-weight:bold;
+  white-space:nowrap;
+}
+#chickenLobby .plus {
+  background:#ffd52d;
+  border:0;
+  border-radius:6px;
+  padding:3px 6px;
+  font-weight:bold;
+}
+#chickenLobby button {
+  cursor:pointer;
+}
+#chickenLobby .logo {
+  position:absolute;
+  top:16%;
+  width:100%;
+  text-align:center;
+  font-size:clamp(23px,5vw,36px);
+  color:#ffe02c;
+  font-weight:1000;
+  text-shadow:3px 4px #873900;
+  z-index:2;
 }
 </style>
 
-<div id="chickenLobby">
-  <div class="lobby-box">
-    <div style="font-size:55px">🐔</div>
-    <h2>Nabil's Crazy Chicken</h2>
-    <p>Welcome to your game!</p>
-    <input id="chickenPlayerName"
-      maxlength="16"
-      placeholder="Enter your player name">
-    <button onclick="chickenSolo()">🎮 SOLO PLAY</button>
-    <button class="online" onclick="chickenOnline()">
-      🌐 ONLINE MODE
-    </button>
-    <p id="chickenLobbyMessage"></p>
+<div id="chickenLobbyMount" class="land"></div>
+<div class="mountains">🏔️</div>
+<div class="trees">🌲 🌳 🌲 🌳 🌲</div>
+
+<div class="logo">🐔 NAB​IL'S CRAZY CHICKEN</div>
+
+<div class="top">
+  <div class="profile">
+    🐔 <span id="lobbyName">Player</span>
+    <div>LEVEL <span id="lobbyLevel">1</span></div>
+    <div style="background:#333;height:7px;border-radius:8px;margin-top:5px">
+      <div style="background:#ffdc30;width:35%;height:7px;border-radius:8px"></div>
+    </div>
+  </div>
+
+  <div class="wallet">
+    🪙 <span id="lobbyCoins">0</span>
+    <button class="plus" onclick="alert('Coin shop coming soon!')">+</button>
+  </div>
+
+  <div class="wallet">
+    💎 <span id="lobbyDiamonds">0</span>
+    <button class="plus" onclick="alert('Diamond shop coming soon!')">+</button>
   </div>
 </div>
 
+<div class="hero">
+  <div id="lobbyChicken" style="font-size:125px;animation:chickenLobbyMove 1.5s infinite ease-in-out">
+    🐔
+  </div>
+  <div style="font-weight:bold;text-shadow:2px 2px #333">
+    YOUR CHICKEN
+  </div>
+  <div class="platform"></div>
+</div>
+
+<style>
+@keyframes chickenLobbyMove {
+  0%,100% {transform:translateY(0) rotate(-4deg)}
+  50% {transform:translateY(-14px) rotate(4deg)}
+}
+#chickenLobby .hero {
+  position:absolute;
+  top:29%;
+  left:50%;
+  transform:translateX(-50%);
+  width:180px;
+  text-align:center;
+  z-index:2;
+}
+#chickenLobby .platform {
+  width:145px;
+  height:17px;
+  margin:8px auto;
+  border-radius:50%;
+  background:#b9faff;
+  border:3px solid #39caff;
+  box-shadow:0 0 18px white;
+}
+#chickenLobby .sideMenu {
+  position:absolute;
+  top:34%;
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+  width:82px;
+  z-index:3;
+}
+#chickenLobby .sideMenu.left {left:7px}
+#chickenLobby .sideMenu.right {right:7px}
+#chickenLobby .sideMenu button {
+  min-height:55px;
+  border:2px solid #9cddff;
+  border-radius:12px;
+  background:linear-gradient(#287bdc,#123c83);
+  color:white;
+  font-size:11px;
+  font-weight:bold;
+}
+#chickenLobby .sideMenu span {
+  display:block;
+  font-size:22px;
+}
+</style>
+
+<div class="sideMenu left">
+  <button onclick="chickenLobbyMessage('Shop coming soon!')"><span>🛒</span>SHOP</button>
+  <button onclick="chickenLobbyMessage('Chicken collection coming soon!')"><span>🐣</span>ANIMALS</button>
+  <button onclick="chickenLobbyMessage('Chicken skins coming soon!')"><span>🎨</span>SKINS</button>
+  <button onclick="chickenLobbyMessage('Outfit collection coming soon!')"><span>👕</span>OUTFITS</button>
+</div>
+<div class="sideMenu right">
+  <button onclick="chickenLobbyMessage('Friends coming soon!')"><span>👥</span>FRIENDS</button>
+  <button onclick="chickenLobbyMessage('Daily rewards coming soon!')"><span>🎁</span>REWARDS</button>
+  <button onclick="chickenLobbyMessage('Missions coming soon!')"><span>🏆</span>MISSIONS</button>
+  <button onclick="chickenLobbyMessage('News coming soon!')"><span>📰</span>NEWS</button>
+</div>
+<div id="lobbyNotice" style="position:absolute;top:23%;left:50%;transform:translateX(-50%);z-index:4;background:#142b50;padding:9px;border-radius:10px;display:none;text-align:center"></div>
+     
+<div class="bottom">
+  <div class="pass">
+    👑 CHICKEN BATTLE PASS
+    <div style="font-size:12px;margin-top:5px">
+      ⭐ Unlock exclusive rewards!
+    </div>
+  </div>
+  <div class="modes">
+    <button class="active" onclick="selectChickenMode(this,'SOLO')">🐔 SOLO</button>
+    <button onclick="selectChickenMode(this,'RACING')">🏁 RACING</button>
+    <button onclick="selectChickenMode(this,'SURVIVAL')">🔥 SURVIVAL</button>
+    <button onclick="selectChickenMode(this,'COIN RUSH')">🪙 COIN RUSH</button>
+  </div>
+
+  <button class="start" onclick="startChickenGame()">
+    ▶ START
+  </button>
+</div>
+
+<style>
+#chickenLobby .bottom {
+  position:absolute;
+  bottom:12px;
+  left:9px;
+  right:9px;
+  z-index:4;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+#chickenLobby .pass {
+  background:#172744;
+  border:2px solid #ffc52a;
+  border-radius:12px;
+  padding:9px;
+  text-align:center;
+  font-weight:bold;
+}
+#chickenLobby .modes {
+  display:flex;
+  gap:4px;
+}
+#chickenLobby .modes button {
+  flex:1;
+  padding:9px 2px;
+  border:2px solid #80d7ff;
+  border-radius:9px;
+  background:#142d4c;
+  color:white;
+  font-size:10px;
+  font-weight:bold;
+}
+#chickenLobby .modes button.active {
+  background:#1689df;
+  border-color:#ffe34c;
+}
+#chickenLobby .start {
+  width:100%;
+  padding:15px;
+  border:3px solid #fff18a;
+  border-radius:17px;
+  background:linear-gradient(#ffe94c,#ff9d16);
+  color:#542500;
+  font-size:27px;
+  font-weight:1000;
+}
+</style>
+
 <script>
-(function(){
-  const savedName = localStorage.getItem("ncc_player_name");
-  if(savedName){
-    document.getElementById("chickenPlayerName").value=savedName;
+let chickenSelectedMode = "SOLO";
+
+function chickenLobbyMessage(message) {
+  const box = document.getElementById("lobbyNotice");
+  box.textContent = message;
+  box.style.display = "block";
+  setTimeout(() => box.style.display = "none", 2200);
+}
+
+function selectChickenMode(button, mode) {
+  chickenSelectedMode = mode;
+  document.querySelectorAll("#chickenLobby .modes button")
+    .forEach(b => b.classList.remove("active"));
+  button.classList.add("active");
+}
+
+function startChickenGame() {
+  document.getElementById("chickenLobby").style.display = "none";
+  if (typeof start === "function") {
+    start(1);
+  } else {
+    document.getElementById("chickenLobby").style.display = "block";
+    chickenLobbyMessage("Game start function not found!");
   }
+}
+
+(function() {
+  const name = localStorage.getItem("ncc_player_name") || "Player";
+  document.getElementById("lobbyName").textContent = name;
 })();
-
-function chickenSolo(){
-  const input=document.getElementById("chickenPlayerName");
-  const name=input.value.trim();
-
-  if(!name){
-    document.getElementById("chickenLobbyMessage").textContent=
-      "Please enter your player name!";
-    return;
-  }
-
-  localStorage.setItem("ncc_player_name",name);
-  document.getElementById("chickenLobby").style.display="none";
-}
-
-function chickenOnline(){
-  document.getElementById("chickenLobbyMessage").textContent=
-    "Online multiplayer is coming soon! 🌐";
-}
 </script>
+</div>
+
+
 <!-- END PLAYER LOBBY -->
 </body>
 </html>
