@@ -425,6 +425,7 @@ if ("serviceWorker" in navigator) {
  const lobby=document.getElementById('chickenLobby');
  const saved=localStorage.getItem('ncc_player_name')||'Player';
  document.getElementById('nccName').textContent=saved;
+     document.getElementById('nccPlayerLevel').textContent = playerLevel;
  document.getElementById('nccHeroName').textContent=saved.toUpperCase();
  document.getElementById('nccDiamonds').textContent=
   localStorage.getItem('ncc_diamonds')||'0';
