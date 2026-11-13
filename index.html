@@ -258,5 +258,90 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
+<!-- PLAYER LOBBY -->
+<style>
+#chickenLobby {
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  background:linear-gradient(145deg,#14213d,#0077b6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:Arial,sans-serif;
+  color:white;
+  text-align:center;
+  padding:20px;
+}
+#chickenLobby .lobby-box {
+  width:100%;
+  max-width:350px;
+  background:#ffffff18;
+  padding:28px 20px;
+  border-radius:22px;
+}
+#chickenLobby input,#chickenLobby button {
+  width:100%;
+  box-sizing:border-box;
+  padding:14px;
+  margin-top:12px;
+  border:0;
+  border-radius:12px;
+  font-size:16px;
+}
+#chickenLobby button {
+  background:#ffd60a;
+  color:#14213d;
+  font-weight:bold;
+}
+#chickenLobby .online {
+  background:#caf0f8;
+}
+</style>
 
-</body></html>
+<div id="chickenLobby">
+  <div class="lobby-box">
+    <div style="font-size:55px">🐔</div>
+    <h2>Nabil's Crazy Chicken</h2>
+    <p>Welcome to your game!</p>
+    <input id="chickenPlayerName"
+      maxlength="16"
+      placeholder="Enter your player name">
+    <button onclick="chickenSolo()">🎮 SOLO PLAY</button>
+    <button class="online" onclick="chickenOnline()">
+      🌐 ONLINE MODE
+    </button>
+    <p id="chickenLobbyMessage"></p>
+  </div>
+</div>
+
+<script>
+(function(){
+  const savedName = localStorage.getItem("ncc_player_name");
+  if(savedName){
+    document.getElementById("chickenPlayerName").value=savedName;
+  }
+})();
+
+function chickenSolo(){
+  const input=document.getElementById("chickenPlayerName");
+  const name=input.value.trim();
+
+  if(!name){
+    document.getElementById("chickenLobbyMessage").textContent=
+      "Please enter your player name!";
+    return;
+  }
+
+  localStorage.setItem("ncc_player_name",name);
+  document.getElementById("chickenLobby").style.display="none";
+}
+
+function chickenOnline(){
+  document.getElementById("chickenLobbyMessage").textContent=
+    "Online multiplayer is coming soon! 🌐";
+}
+</script>
+<!-- END PLAYER LOBBY -->
+</body>
+</html>
