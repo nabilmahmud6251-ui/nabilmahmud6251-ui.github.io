@@ -260,396 +260,182 @@ if ("serviceWorker" in navigator) {
 </script>
 <!-- PLAYER LOBBY -->
 
-<div id="chickenLobbyMount" class="land"></div>
-<div class="mountains">🏔️</div>
-<div class="trees">🌲 🌳 🌲 🌳 🌲</div>
-
-<div class="logo">🐔 NAB​IL'S CRAZY CHICKEN</div>
-
-<div class="top">
-  <div class="profile">
-    🐔 <span id="lobbyName">Player</span>
-    <div>LEVEL <span id="lobbyLevel">1</span></div>
-    <div style="background:#333;height:7px;border-radius:8px;margin-top:5px">
-      <div style="background:#ffdc30;width:35%;height:7px;border-radius:8px"></div>
-    </div>
-  </div>
-
-  <div class="wallet">
-    🪙 <span id="lobbyCoins">0</span>
-    <button class="plus" onclick="alert('Coin shop coming soon!')">+</button>
-  </div>
-
-  <div class="wallet">
-    💎 <span id="lobbyDiamonds">0</span>
-    <button class="plus" onclick="alert('Diamond shop coming soon!')">+</button>
-  </div>
-</div>
-
-<div class="hero">
-  <div id="lobbyChicken" style="font-size:125px;animation:chickenLobbyMove 1.5s infinite ease-in-out">
-    🐔
-  </div>
-  <div style="font-weight:bold;text-shadow:2px 2px #333">
-    YOUR CHICKEN
-  </div>
-  <div class="platform"></div>
-</div>
-
-<style>
-@keyframes chickenLobbyMove {
-  0%,100% {transform:translateY(0) rotate(-4deg)}
-  50% {transform:translateY(-14px) rotate(4deg)}
-}
-#chickenLobby .hero {
-  position:absolute;
-  top:29%;
-  left:50%;
-  transform:translateX(-50%);
-  width:180px;
-  text-align:center;
-  z-index:2;
-}
-#chickenLobby .platform {
-  width:145px;
-  height:17px;
-  margin:8px auto;
-  border-radius:50%;
-  background:#b9faff;
-  border:3px solid #39caff;
-  box-shadow:0 0 18px white;
-}
-#chickenLobby .sideMenu {
-  position:absolute;
-  top:34%;
-  display:flex;
-  flex-direction:column;
-  gap:9px;
-  width:82px;
-  z-index:3;
-}
-#chickenLobby .sideMenu.left {left:7px}
-#chickenLobby .sideMenu.right {right:7px}
-#chickenLobby .sideMenu button {
-  min-height:55px;
-  border:2px solid #9cddff;
-  border-radius:12px;
-  background:linear-gradient(#287bdc,#123c83);
-  color:white;
-  font-size:11px;
-  font-weight:bold;
-}
-#chickenLobby .sideMenu span {
-  display:block;
-  font-size:22px;
-}
-</style>
-
-<div class="sideMenu left">
-  <button onclick="chickenLobbyMessage('Shop coming soon!')"><span>🛒</span>SHOP</button>
-  <button onclick="chickenLobbyMessage('Chicken collection coming soon!')"><span>🐣</span>ANIMALS</button>
-  <button onclick="chickenLobbyMessage('Chicken skins coming soon!')"><span>🎨</span>SKINS</button>
-  <button onclick="chickenLobbyMessage('Outfit collection coming soon!')"><span>👕</span>OUTFITS</button>
-</div>
-
-<div class="sideMenu right">
-  <button onclick="chickenLobbyMessage('Friends coming soon!')"><span>👥</span>FRIENDS</button>
-  <button onclick="chickenLobbyMessage('Daily rewards coming soon!')"><span>🎁</span>REWARDS</button>
-  <button onclick="chickenLobbyMessage('Missions coming soon!')"><span>🏆</span>MISSIONS</button>
-  <button onclick="chickenLobbyMessage('News coming soon!')"><span>📰</span>NEWS</button>
-</div>
-
-<div id="lobbyNotice" style="position:absolute;top:23%;left:50%;transform:translateX(-50%);z-index:4;background:#142b50;padding:9px;border-radius:10px;display:none;text-align:center"></div>
-
 <style>
 #chickenLobby {
-  position:fixed;
-  inset:0;
-  z-index:99999;
-  overflow:hidden;
-  color:white;
-  font-family:Arial,sans-serif;
-  background:linear-gradient(#168bea,#9beaff 48%,#75d82c 49%,#168b27);
+ position:fixed;inset:0;z-index:99999;overflow:auto;
+ background:linear-gradient(#62c8ed,#b8e5a0 55%,#348348);
+ color:white;font-family:Arial,sans-serif;text-align:center;
+ text-shadow:0 2px 3px #234;
 }
-#chickenLobby * {
-  box-sizing:border-box;
+#chickenLobby *{box-sizing:border-box}
+#chickenLobby .top{
+ display:flex;justify-content:space-between;align-items:center;
+ gap:7px;padding:12px;flex-wrap:wrap
 }
-#chickenLobby .land {
-  position:absolute;
-  bottom:0;
-  height:48%;
-  width:100%;
-  background:linear-gradient(#a1ee42,#3cba25 65%,#137d25);
-  border-radius:50% 50% 0 0/12% 12% 0 0;
+#chickenLobby .profile,#chickenLobby .wallet{
+ background:#174638eF;border:1px solid #e4f6ae;
+ border-radius:12px;padding:9px;font-weight:bold
 }
-#chickenLobby .mountains {
-  position:absolute;
-  top:19%;
-  left:0;
-  width:100%;
-  text-align:center;
-  font-size:100px;
+#chickenLobby .scene{
+ position:relative;height:300px;display:flex;
+ justify-content:center;align-items:center;overflow:hidden
 }
-#chickenLobby .trees {
-  position:absolute;
-  top:38%;
-  width:100%;
-  text-align:center;
-  font-size:35px;
-  white-space:nowrap;
+#chickenLobby .sun{
+ position:absolute;right:12%;top:20px;width:60px;height:60px;
+ border-radius:50%;background:#fff5a6;box-shadow:0 0 30px white
 }
-#chickenLobby .top {
-  position:absolute;
-  top:9px;
-  left:8px;
-  right:8px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:4px;
-  z-index:3;
+#chickenLobby .hill{
+ position:absolute;bottom:0;width:100%;height:120px;
+ background:linear-gradient(150deg,transparent 25%,#5b9b50 26% 55%,transparent 56%),
+ linear-gradient(30deg,#397c42 30%,#75b45a 31% 65%,#397c42 66%)
 }
-#chickenLobby .profile {
-  background:#172b50;
-  border:2px solid #80cfff;
-  border-radius:13px;
-  padding:7px;
-  min-width:105px;
-  font-size:13px;
-  font-weight:bold;
+#chickenLobby .tree{position:absolute;bottom:35px;font-size:55px}
+#chickenLobby .leftTree{left:3%}
+#chickenLobby .rightTree{right:3%}
+#chickenLobby .platform{
+ position:absolute;bottom:22px;width:210px;height:35px;
+ border-radius:50%;background:#c6ff55;box-shadow:0 0 25px #e6ff77
 }
-#chickenLobby .wallet {
-  background:#172b50;
-  border:2px solid #80cfff;
-  border-radius:10px;
-  padding:7px 5px;
-  font-size:12px;
-  font-weight:bold;
-  white-space:nowrap;
+#chickenLobby .hero{position:relative;z-index:2;animation:nccBob 1.4s infinite ease-in-out}
+#chickenLobby .bird{font-size:110px;filter:drop-shadow(0 8px 5px #345)}
+#chickenLobby .cap{font-size:35px;margin-bottom:-28px;position:relative;z-index:3}
+#chickenLobby .heroName{
+ background:#174638;padding:5px 18px;border-radius:20px;font-weight:bold
 }
-#chickenLobby .plus {
-  background:#ffd52d;
-  border:0;
-  border-radius:6px;
-  padding:3px 6px;
-  font-weight:bold;
+@keyframes nccBob{50%{transform:translateY(-10px)}}
+#chickenLobby .menus{
+ display:flex;justify-content:space-between;padding:8px;gap:8px
 }
-#chickenLobby button {
-  cursor:pointer;
+#chickenLobby .menuCol{display:grid;gap:8px}
+#chickenLobby button{
+ border:1px solid #fff;border-radius:10px;padding:11px 12px;
+ background:#174638;color:white;font-weight:bold;cursor:pointer
 }
-#chickenLobby .logo {
-  position:absolute;
-  top:16%;
-  width:100%;
-  text-align:center;
-  font-size:clamp(23px,5vw,36px);
-  color:#ffe02c;
-  font-weight:1000;
-  text-shadow:3px 4px #873900;
-  z-index:2;
+#chickenLobby button:active{transform:scale(.96)}
+#chickenLobby .bottom{padding:8px 10px 24px}
+#chickenLobby .pass{
+ background:#86501f;border:1px solid gold;padding:10px;
+ border-radius:10px;margin:8px auto;max-width:320px
+}
+#chickenLobby .modes{
+ display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:12px
+}
+#chickenLobby .modes .selected{background:#e5a51a;color:#321}
+#chickenLobby .start{
+ background:linear-gradient(#ffe96b,#f49b0c);color:#432!important;
+ font-size:23px;padding:14px 55px;border:3px solid white;
+ box-shadow:0 5px #96500b
+}
+#chickenLobby .note{font-size:12px;margin:10px}
+@media(max-width:390px){
+ #chickenLobby .bird{font-size:90px}
+ #chickenLobby .scene{height:260px}
+ #chickenLobby .menus button{font-size:11px;padding:9px 7px}
 }
 </style>
 
-<div id="chickenLobbyMount" class="land"></div>
-<div class="mountains">🏔️</div>
-<div class="trees">🌲 🌳 🌲 🌳 🌲</div>
-
-<div class="logo">🐔 NAB​IL'S CRAZY CHICKEN</div>
-
-<div class="top">
-  <div class="profile">
-    🐔 <span id="lobbyName">Player</span>
-    <div>LEVEL <span id="lobbyLevel">1</span></div>
-    <div style="background:#333;height:7px;border-radius:8px;margin-top:5px">
-      <div style="background:#ffdc30;width:35%;height:7px;border-radius:8px"></div>
-    </div>
+<div id="chickenLobby">
+ <div class="top">
+  <div class="profile" id="nccProfile">
+   👤 <span id="nccName">Player</span><br>⭐ Level 1
   </div>
+  <div class="wallet">🪙 <span id="nccCoins">0</span></div>
+  <div class="wallet">💎 <span id="nccDiamonds">0</span></div>
+ </div>
 
-  <div class="wallet">
-    🪙 <span id="lobbyCoins">0</span>
-    <button class="plus" onclick="alert('Coin shop coming soon!')">+</button>
-  </div>
-
-  <div class="wallet">
-    💎 <span id="lobbyDiamonds">0</span>
-    <button class="plus" onclick="alert('Diamond shop coming soon!')">+</button>
-  </div>
-</div>
-
-<div class="hero">
-  <div id="lobbyChicken" style="font-size:125px;animation:chickenLobbyMove 1.5s infinite ease-in-out">
-    🐔
-  </div>
-  <div style="font-weight:bold;text-shadow:2px 2px #333">
-    YOUR CHICKEN
-  </div>
+ <div class="scene">
+  <div class="sun"></div>
+  <div class="hill"></div>
+  <div class="tree leftTree">🌳</div>
+  <div class="tree rightTree">🌲</div>
   <div class="platform"></div>
-</div>
-
-<style>
-@keyframes chickenLobbyMove {
-  0%,100% {transform:translateY(0) rotate(-4deg)}
-  50% {transform:translateY(-14px) rotate(4deg)}
-}
-#chickenLobby .hero {
-  position:absolute;
-  top:29%;
-  left:50%;
-  transform:translateX(-50%);
-  width:180px;
-  text-align:center;
-  z-index:2;
-}
-#chickenLobby .platform {
-  width:145px;
-  height:17px;
-  margin:8px auto;
-  border-radius:50%;
-  background:#b9faff;
-  border:3px solid #39caff;
-  box-shadow:0 0 18px white;
-}
-#chickenLobby .sideMenu {
-  position:absolute;
-  top:34%;
-  display:flex;
-  flex-direction:column;
-  gap:9px;
-  width:82px;
-  z-index:3;
-}
-#chickenLobby .sideMenu.left {left:7px}
-#chickenLobby .sideMenu.right {right:7px}
-#chickenLobby .sideMenu button {
-  min-height:55px;
-  border:2px solid #9cddff;
-  border-radius:12px;
-  background:linear-gradient(#287bdc,#123c83);
-  color:white;
-  font-size:11px;
-  font-weight:bold;
-}
-#chickenLobby .sideMenu span {
-  display:block;
-  font-size:22px;
-}
-</style>
-
-<div class="sideMenu left">
-  <button onclick="chickenLobbyMessage('Shop coming soon!')"><span>🛒</span>SHOP</button>
-  <button onclick="chickenLobbyMessage('Chicken collection coming soon!')"><span>🐣</span>ANIMALS</button>
-  <button onclick="chickenLobbyMessage('Chicken skins coming soon!')"><span>🎨</span>SKINS</button>
-  <button onclick="chickenLobbyMessage('Outfit collection coming soon!')"><span>👕</span>OUTFITS</button>
-</div>
-<div class="sideMenu right">
-  <button onclick="chickenLobbyMessage('Friends coming soon!')"><span>👥</span>FRIENDS</button>
-  <button onclick="chickenLobbyMessage('Daily rewards coming soon!')"><span>🎁</span>REWARDS</button>
-  <button onclick="chickenLobbyMessage('Missions coming soon!')"><span>🏆</span>MISSIONS</button>
-  <button onclick="chickenLobbyMessage('News coming soon!')"><span>📰</span>NEWS</button>
-</div>
-<div id="lobbyNotice" style="position:absolute;top:23%;left:50%;transform:translateX(-50%);z-index:4;background:#142b50;padding:9px;border-radius:10px;display:none;text-align:center"></div>
-     
-<div class="bottom">
-  <div class="pass">
-    👑 CHICKEN BATTLE PASS
-    <div style="font-size:12px;margin-top:5px">
-      ⭐ Unlock exclusive rewards!
-    </div>
+  <div class="hero">
+   <div class="cap">🧢</div>
+   <div class="bird">🐔</div>
+   <div class="heroName" id="nccHeroName">PLAYER</div>
+   <div>🕶️ 👕 👟</div>
   </div>
+ </div>
+
+ <div class="menus">
+  <div class="menuCol">
+   <button data-menu="Shop">🛒 SHOP</button>
+   <button data-menu="Animals">🐾 ANIMALS</button>
+   <button data-menu="Skins">🎨 SKINS</button>
+   <button data-menu="Outfits">👕 OUTFITS</button>
+  </div>
+  <div class="menuCol">
+   <button data-menu="Friends">👥 FRIENDS</button>
+   <button data-menu="Daily Rewards">🎁 DAILY REWARDS</button>
+   <button data-menu="Missions">📜 MISSIONS</button>
+   <button data-menu="News">📰 NEWS</button>
+  </div>
+ </div>
+
+ <div class="bottom">
+  <div class="pass">🏆 CHICKEN BATTLE PASS</div>
+  <b>SELECT GAME MODE</b>
   <div class="modes">
-    <button class="active" onclick="selectChickenMode(this,'SOLO')">🐔 SOLO</button>
-    <button onclick="selectChickenMode(this,'RACING')">🏁 RACING</button>
-    <button onclick="selectChickenMode(this,'SURVIVAL')">🔥 SURVIVAL</button>
-    <button onclick="selectChickenMode(this,'COIN RUSH')">🪙 COIN RUSH</button>
+   <button class="selected" data-mode="Solo">SOLO</button>
+   <button data-mode="Racing">RACING</button>
+   <button data-mode="Survival">SURVIVAL</button>
+   <button data-mode="Coin Rush">COIN RUSH</button>
   </div>
-
-  <button class="start" onclick="startChickenGame()">
-    ▶ START
-  </button>
+  <button class="start" id="nccStart">▶ START</button>
+  <div class="note">Welcome to Nabil's Crazy Chicken!</div>
+ </div>
 </div>
-
-<style>
-#chickenLobby .bottom {
-  position:absolute;
-  bottom:12px;
-  left:9px;
-  right:9px;
-  z-index:4;
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-#chickenLobby .pass {
-  background:#172744;
-  border:2px solid #ffc52a;
-  border-radius:12px;
-  padding:9px;
-  text-align:center;
-  font-weight:bold;
-}
-#chickenLobby .modes {
-  display:flex;
-  gap:4px;
-}
-#chickenLobby .modes button {
-  flex:1;
-  padding:9px 2px;
-  border:2px solid #80d7ff;
-  border-radius:9px;
-  background:#142d4c;
-  color:white;
-  font-size:10px;
-  font-weight:bold;
-}
-#chickenLobby .modes button.active {
-  background:#1689df;
-  border-color:#ffe34c;
-}
-#chickenLobby .start {
-  width:100%;
-  padding:15px;
-  border:3px solid #fff18a;
-  border-radius:17px;
-  background:linear-gradient(#ffe94c,#ff9d16);
-  color:#542500;
-  font-size:27px;
-  font-weight:1000;
-}
-</style>
 
 <script>
-let chickenSelectedMode = "SOLO";
+(function(){
+ const lobby=document.getElementById('chickenLobby');
+ const saved=localStorage.getItem('ncc_player_name')||'Player';
+ document.getElementById('nccName').textContent=saved;
+ document.getElementById('nccHeroName').textContent=saved.toUpperCase();
+ document.getElementById('nccDiamonds').textContent=
+  localStorage.getItem('ncc_diamonds')||'0';
 
-function chickenLobbyMessage(message) {
-  const box = document.getElementById("lobbyNotice");
-  box.textContent = message;
-  box.style.display = "block";
-  setTimeout(() => box.style.display = "none", 2200);
-}
+ try{
+  document.getElementById('nccCoins').textContent=
+   typeof bank!=='undefined'?bank:0;
+ }catch(e){}
 
-function selectChickenMode(button, mode) {
-  chickenSelectedMode = mode;
-  document.querySelectorAll("#chickenLobby .modes button")
-    .forEach(b => b.classList.remove("active"));
-  button.classList.add("active");
-}
-
-function startChickenGame() {
-  document.getElementById("chickenLobby").style.display = "none";
-  if (typeof start === "function") {
-    start(1);
-  } else {
-    document.getElementById("chickenLobby").style.display = "block";
-    chickenLobbyMessage("Game start function not found!");
+ document.getElementById('nccProfile').onclick=function(){
+  const n=prompt('Enter player name:',saved);
+  if(n&&n.trim()){
+   localStorage.setItem('ncc_player_name',n.trim());
+   document.getElementById('nccName').textContent=n.trim();
+   document.getElementById('nccHeroName').textContent=n.trim().toUpperCase();
   }
-}
+ };
 
-(function() {
-  const name = localStorage.getItem("ncc_player_name") || "Player";
-  document.getElementById("lobbyName").textContent = name;
+ lobby.querySelectorAll('[data-menu]').forEach(function(btn){
+  btn.onclick=function(){
+   alert(btn.dataset.menu+' feature coming soon!');
+  };
+ });
+
+ lobby.querySelectorAll('[data-mode]').forEach(function(btn){
+  btn.onclick=function(){
+   lobby.querySelectorAll('[data-mode]').forEach(function(b){
+    b.classList.remove('selected');
+   });
+   btn.classList.add('selected');
+  };
+ });
+
+ document.getElementById('nccStart').onclick=function(){
+  if(typeof start==='function'){
+   lobby.style.display='none';
+   start(1);
+  }else{
+   alert('Game start function not found. Please tell me.');
+  }
+ };
 })();
 </script>
-</div>
+
+  
 
 
 <!-- END PLAYER LOBBY -->
