@@ -217,7 +217,7 @@ function menu(){state='menu';
  ov(`<div style="font-size:52px">🐔</div><h1>Crazy Chicken</h1><h2>Road Survival</h2><div>🏆 Best ${best} &nbsp;·&nbsp; 🪙 ${bank}</div>
  <div class="hint">Tap a skin to pick it. Collect coins to unlock more!</div>
  <div class="skins">${SK.map((s,i)=>`<div class="sk ${i===skin?'on':''}" data-i="${i}"><canvas width="96" height="96"></canvas>${owned.includes(i)?s.n:'🪙 '+s.cost}</div>`).join('')}</div>
- <button class="btn" data-a="play">PLAY</button>
+ <button class="btn" data-a="play">▶ CONTINUE LEVEL ${resumeLevel}</button>
  <div class="hint">Tap = hop forward · Swipe = left / right / back<br>Ride logs, dodge cars and trains. 10 levels!</div>${CR}`);
  ovEl.querySelectorAll('.sk canvas').forEach((c,i)=>chicken(c.getContext('2d'),48,88,.9,i,1,1.2))}
 function showOver(){
