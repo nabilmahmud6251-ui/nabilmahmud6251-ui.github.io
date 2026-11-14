@@ -237,7 +237,7 @@ function loop(t){const dt=Math.min(.05,(t-lt)/1000||0);lt=t;update(dt);render();
 /* ---------- screens ---------- */
 const ovEl=$('ov');
 function ov(h){if(h==null){ovEl.style.display='none';return}ovEl.style.display='flex';ovEl.innerHTML=h}
-const CR='<div class="credit">Created by Nabil Mahmud</div>';
+const CR='<div class="credit">Created by Nabil Mahmud</div><div style="font-size:13px;margin-top:4px"><a href="https://nabilmahmud6251-ui.github.io/privacy.html" style="color:#fff">Privacy Policy</a> &nbsp;|&nbsp; <a href="https://nabilmahmud6251-ui.github.io/about.html" style="color:#fff">About Us</a> &nbsp;|&nbsp; <a href="https://nabilmahmud6251-ui.github.io/contact.html" style="color:#fff">Contact Us</a></div>';
 function menu(){state='menu';
  ov(`<div style="font-size:52px">🐔</div><h1>Crazy Chicken</h1><h2>Road Survival</h2><div>🏆 Best ${best} &nbsp;·&nbsp; 🪙 ${bank}</div>
  <div class="hint">Tap a skin to pick it. Collect coins to unlock more!</div>
