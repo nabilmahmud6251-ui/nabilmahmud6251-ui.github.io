@@ -136,7 +136,7 @@ function move(dr,dc){
  if(nx<(row.t==='g'?0:-.5)||nx>COLS-(row.t==='g'?1:.5))return;
  if(row.t==='g'&&row.trees.includes(nx)){sfx.bump();shake=.15;return}
  ck.hop={t:0,fr:ck.r,fx:ck.x,tr:nr,tx:nx};sfx.hop()}
-function land(){
+     
  function land(){
  const row=rows[ck.r];
 
