@@ -222,7 +222,7 @@ function menu(){state='menu';
  ovEl.querySelectorAll('.sk canvas').forEach((c,i)=>chicken(c.getContext('2d'),48,88,.9,i,1,1.2))}
 function showOver(){
  const why={car:'Splat! A car got you.',truck:'Flattened by a truck!',train:'The train was faster!',water:'Splash! Chickens cannot swim.',off:'Swept away by the river!',eagle:'An eagle snatched you!'}[dk]||'Game over';
- ov(`<h1>GAME OVER</h1><h2>${why}</h2><div style="font-size:24px;font-weight:800">Score ${score}</div><div>🏆 Best ${best} · Level ${L}/10 · 🪙 ${bank}</div>
+ ov(`<h1>GAME OVER</h1><h2>${why}</h2><div style="font-size:24px;font-weight:800">Score ${score}</div><div>🏆 Best ${best} · Level ${L}/${MAX_LEVELS} · 🪙 ${bank}</div>
  <button class="btn" data-a="retry">↻ RESTART</button><button class="btn alt" data-a="menu">Skins / Menu</button>${CR}`)}
 function showWin(){
  if(score>best){best=score;ST.set('cc_best',best)}
