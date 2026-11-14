@@ -218,7 +218,7 @@ function menu(){state='menu';
  <div class="hint">Tap a skin to pick it. Collect coins to unlock more!</div>
  <div class="skins">${SK.map((s,i)=>`<div class="sk ${i===skin?'on':''}" data-i="${i}"><canvas width="96" height="96"></canvas>${owned.includes(i)?s.n:'🪙 '+s.cost}</div>`).join('')}</div>
  <button class="btn" data-a="play">▶ CONTINUE LEVEL ${resumeLevel}</button>
- <div class="hint">Tap = hop forward · Swipe = left / right / back<br>Ride logs, dodge cars and trains. 10 levels!</div>${CR}`);
+ <div class="hint">Tap = hop forward · Swipe = left / right / back<br>Ride logs, dodge cars and trains. 20 levels!!</div>${CR}`);
  ovEl.querySelectorAll('.sk canvas').forEach((c,i)=>chicken(c.getContext('2d'),48,88,.9,i,1,1.2))}
 function showOver(){
  const why={car:'Splat! A car got you.',truck:'Flattened by a truck!',train:'The train was faster!',water:'Splash! Chickens cannot swim.',off:'Swept away by the river!',eagle:'An eagle snatched you!'}[dk]||'Game over';
