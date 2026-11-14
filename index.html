@@ -232,7 +232,7 @@ ovEl.addEventListener('click',e=>{
  initAudio();const sk=e.target.closest('.sk'),b=e.target.closest('[data-a]');
  if(sk){const i=+sk.dataset.i;if(owned.includes(i)){skin=i}else if(bank>=SK[i].cost){bank-=SK[i].cost;owned.push(i);skin=i;ST.set('cc_bank',bank);ST.set('cc_own',owned);sfx.win()}else sfx.bump();ST.set('cc_skin',skin);hud();menu();return}
  if(!b)return;const a=b.dataset.a;
- if(a==='play'||a==='new'){score=0;start(1)}
+ if(a==='play'||a==='new'){score=0;start(a==='play'?resumeLevel:1)}
  else if(a==='retry'){score=lsScore;if(lsScore===0&&L===1)score=0;start(L)}
  else if(a==='next')start(L+1);
  else if(a==='menu')menu()});
