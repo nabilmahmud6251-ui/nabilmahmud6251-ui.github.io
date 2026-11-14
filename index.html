@@ -137,11 +137,36 @@ function move(dr,dc){
  if(row.t==='g'&&row.trees.includes(nx)){sfx.bump();shake=.15;return}
  ck.hop={t:0,fr:ck.r,fx:ck.x,tr:nr,tx:nx};sfx.hop()}
 function land(){
+ function land(){
  const row=rows[ck.r];
- if(ck.r===LEN){state='win';score+=100*L;unlocked=Math.max(unlocked,Math.min(MAX_LEVELS,L+1));resumeLevel=Math.min(MAX_LEVELS,L+1);ST.set('cc_unlocked',unlocked);ST.set('cc_resume',resumeLevel);sfx.win();hud();setTimeout(showWin,700)}
- if(row.coin!==null&&Math.abs(ck.x-row.coin)<.6){row.coin=null;bank++;score+=50;ST.set('cc_bank',bank);sfx.coin();const p=cpos();spark(p.sx,p.sy-S*.5,'#ffd23f',12)}
+
+ if(ck.r>maxR){maxR=ck.r;score+=10;idle=0}
+
+ if(row.coin!==null&&Math.abs(ck.x-row.coin)<.6){
+  row.coin=null;
+  bank++;
+  score+=50;
+  ST.set('cc_bank',bank);
+  sfx.coin();
+  const p=cpos();
+  spark(p.sx,p.sy-S*.5,'#ffd23f',12);
+ }
+
+ if(ck.r===LEN){
+  state='win';
+  score+=100*L;
+  unlocked=Math.max(unlocked,Math.min(MAX_LEVELS,L+1));
+  resumeLevel=Math.min(MAX_LEVELS,L+1);
+  ST.set('cc_unlocked',unlocked);
+  ST.set('cc_resume',resumeLevel);
+  sfx.win();
+  hud();
+  setTimeout(showWin,700);
+  return;
+ }
+
  hud();
- if(ck.r===LEN){state='win';score+=100*L;sfx.win();hud();setTimeout(showWin,700)}}
+}
 function die(k){
  if(state!=='play')return;state='dead';dk=k;deadT=0;const p=cpos();
  if(k==='water'||k==='off')sfx.splash();else sfx.die();
