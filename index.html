@@ -58,6 +58,9 @@ canvas{display:block}
 const C=document.getElementById('c'),X=C.getContext('2d'),$=id=>document.getElementById(id);
 const COLS=7;let W,H,S,DPR;
 const ST={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+  const MAX_LEVELS=20;
+let unlocked=Math.max(1,Math.min(MAX_LEVELS,Number(ST.get('cc_unlocked',1))||1));
+let resumeLevel=Math.max(1,Math.min(unlocked,Number(ST.get('cc_resume',1))||1));   
 let best=ST.get('cc_best',0),bank=ST.get('cc_bank',0),owned=ST.get('cc_own',[0]),skin=ST.get('cc_skin',0),mute=ST.get('cc_mute',false);
 const SK=[{n:'Classic',b:'#ffffff',c:'#e63946',cost:0},{n:'Golden',b:'#ffd23f',c:'#ff7b00',cost:25,crown:1},{n:'Ninja',b:'#3a3d5c',c:'#8d99ae',cost:60,band:1},{n:'Pinky',b:'#ff8fc7',c:'#c9184a',cost:120},{n:'Rainbow',b:'rb',c:'#e63946',cost:250}];
 const CARS=['#e63946','#2a9df4','#ffb703','#8338ec','#06d6a0','#fb5607'];
