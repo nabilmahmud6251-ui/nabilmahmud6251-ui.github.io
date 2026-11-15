@@ -1,0 +1,19 @@
+{
+  "id": "./",
+  "name": "Nabil's Crazy Chicken",
+  "short_name": "Crazy Chicken",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1d3557",
+  "theme_color": "#1d3557",
+  "icons": [
+    {
+      "src": "./A3D2BD9E-0CAC-4BDB-B5AA-B883A111B682.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
