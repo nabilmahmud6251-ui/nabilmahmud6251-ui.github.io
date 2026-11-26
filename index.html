@@ -252,6 +252,7 @@ const CR='<div class="credit">Created by Nabil Mahmud</div><div style="font-size
 function menu(){state='menu';
  ov(`<div style="font-size:52px">🐔</div><h1>Crazy Chicken</h1><h2>Road Survival</h2><div>🏆 Best ${best} &nbsp;·&nbsp; 🪙 ${bank}</div>
  <div class="hint">Tap a skin to pick it. Collect coins to unlock more!</div>
+ <a href="./guide.html" style="color:#ffd23f;font-weight:bold;text-decoration:underline;font-size:14px">📖 How to Play & Game Guide</a>
  <div class="skins">${SK.map((s,i)=>`<div class="sk ${i===skin?'on':''}" data-i="${i}"><canvas width="96" height="96"></canvas>${owned.includes(i)?s.n:'🪙 '+s.cost}</div>`).join('')}</div>
  <button class="btn" data-a="play">▶ CONTINUE LEVEL ${resumeLevel}</button>
  <div class="hint">Tap = hop forward · Swipe = left / right / back<br>Ride logs, dodge cars and trains. 20 levels!!</div>${CR}`);
